@@ -31,7 +31,7 @@ adminAuth: {
         			{
 					username: "user",
         			password: "$2a$08$d7nsfnLx0N05qTVL8Gifj.glZh5ISJcqzETxbL0NLiXRPwNJ8hFom",
-        			permissions: "*"}
+        			permissions: "read"}
         
     			],
     default: {
