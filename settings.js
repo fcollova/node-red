@@ -42,7 +42,7 @@ adminAuth: {
 	
 	
     // the tcp port that the Node-RED web server is listening on
-    uiPort: process.env.VCAP_APP_PORT || 1880
+    uiPort: process.env.VCAP_APP_PORT || 1880,
 
     // By default, the Node-RED UI accepts connections on all IPv4 interfaces.
     // The following property can be used to listen on a specific interface. For
