@@ -1,0 +1,257 @@
+[
+    {
+        "type": "tab",
+        "id": "f1357f2e.0eca8",
+        "label": "Sheet 1"
+    },
+    {
+        "id": "49145476.b6ebac",
+        "type": "http request",
+        "name": "http GET from Smartbench",
+        "method": "GET",
+        "ret": "txt",
+        "url": "",
+        "x": 201,
+        "y": 245,
+        "z": "f1357f2e.0eca8",
+        "wires": [
+            [
+                "bb7a2004.4485e",
+                "f95ff907.06a008"
+            ]
+        ]
+    },
+    {
+        "id": "20f44c24.df0bb4",
+        "type": "inject",
+        "name": "",
+        "topic": "",
+        "payload": "Vai",
+        "payloadType": "string",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 130,
+        "y": 75,
+        "z": "f1357f2e.0eca8",
+        "wires": [
+            [
+                "f4f3aa69.0b0c58"
+            ]
+        ]
+    },
+    {
+        "id": "f4f3aa69.0b0c58",
+        "type": "function",
+        "name": "Set GET parameters",
+        "func": "msg.url = \"http://m2m-etsi.tilab.com/etsi/almanac/applications/smartbench/containers/bench2/contentInstances/latest\"\nmsg.headers = {\n    \"From\" : \"http://m2m-etsi.tilab.com/etsi/almanac/applications/smartbench\",\n    \"Accept\" : \"application/xml\" };\nreturn msg;\n\n// m2mtilab.dtdns.net\n// m2m-etsi.tilab.com",
+        "outputs": 1,
+        "valid": true,
+        "x": 364,
+        "y": 75,
+        "z": "f1357f2e.0eca8",
+        "wires": [
+            [
+                "49145476.b6ebac"
+            ]
+        ]
+    },
+    {
+        "id": "bb7a2004.4485e",
+        "type": "xml",
+        "name": "Parse XML",
+        "attr": "$",
+        "chr": "_",
+        "x": 415,
+        "y": 245,
+        "z": "f1357f2e.0eca8",
+        "wires": [
+            [
+                "2dcfc1c5.d2303e"
+            ]
+        ]
+    },
+    {
+        "id": "2dcfc1c5.d2303e",
+        "type": "function",
+        "name": "Parse Body",
+        "func": "msg.payload = msg.payload.contentInstance.content[0].textContent[0];\nreturn msg;",
+        "outputs": 1,
+        "valid": true,
+        "x": 596,
+        "y": 245,
+        "z": "f1357f2e.0eca8",
+        "wires": [
+            [
+                "322eda8a.cdd126",
+                "57f2365f.a80dc8"
+            ]
+        ]
+    },
+    {
+        "id": "7c865bdc.8379a4",
+        "type": "file",
+        "name": "Log",
+        "filename": "Test.log",
+        "appendNewline": true,
+        "overwriteFile": "true",
+        "x": 668,
+        "y": 417,
+        "z": "f1357f2e.0eca8",
+        "wires": []
+    },
+    {
+        "id": "322eda8a.cdd126",
+        "type": "json",
+        "name": "Parse json",
+        "x": 165,
+        "y": 417,
+        "z": "f1357f2e.0eca8",
+        "wires": [
+            [
+                "4606766b.b9f988",
+                "2b6797a.fd49868"
+            ]
+        ]
+    },
+    {
+        "id": "4606766b.b9f988",
+        "type": "function",
+        "name": "Parse Content & Sitting Logic",
+        "func": "if (msg.payload == \"reset\")\n{\n    context.sittings = -1\n}\nsbench = msg.payload;\ntransits = sbench.transits;\nsittings = sbench.sittings\nnode.log(\"tr: \" + transits + \" sit: \"+ sittings);\n\ntext = \"#infosbench -- hello world! \" +sittings+ \" person seated! & \"+transits+\" transited near me!\"\nmsg.payload = text\n\nif (context.sittings == null || context.sittings == -1 ){\n    context.sittings = sittings;\n    node.log(\"sittings set: \" + context.sittings)\n\n}\nif (context.sittings < sittings)\n    {\n    node.log(msg.payload);\n    context.sittings = sittings;\n    return msg;\n    }\n",
+        "outputs": "1",
+        "valid": true,
+        "x": 423,
+        "y": 417,
+        "z": "f1357f2e.0eca8",
+        "wires": [
+            [
+                "7c865bdc.8379a4",
+                "c8623d2a.379dc",
+                "3a974971.c568b6"
+            ]
+        ]
+    },
+    {
+        "id": "c8623d2a.379dc",
+        "type": "twitter out",
+        "twitter": "",
+        "name": "Tweet @infobench",
+        "x": 707,
+        "y": 345,
+        "z": "f1357f2e.0eca8",
+        "wires": []
+    },
+    {
+        "id": "f95ff907.06a008",
+        "type": "debug",
+        "name": "",
+        "active": false,
+        "console": "true",
+        "complete": "payload",
+        "x": 421,
+        "y": 179,
+        "z": "f1357f2e.0eca8",
+        "wires": []
+    },
+    {
+        "id": "57f2365f.a80dc8",
+        "type": "debug",
+        "name": "",
+        "active": false,
+        "console": "false",
+        "complete": "false",
+        "x": 752,
+        "y": 181,
+        "z": "f1357f2e.0eca8",
+        "wires": []
+    },
+    {
+        "id": "3a974971.c568b6",
+        "type": "debug",
+        "name": "",
+        "active": false,
+        "console": "false",
+        "complete": "false",
+        "x": 687,
+        "y": 488,
+        "z": "f1357f2e.0eca8",
+        "wires": []
+    },
+    {
+        "id": "8f14ce05.70eb3",
+        "type": "inject",
+        "name": "Reset",
+        "topic": "",
+        "payload": "reset",
+        "payloadType": "string",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 155,
+        "y": 518,
+        "z": "f1357f2e.0eca8",
+        "wires": [
+            [
+                "4606766b.b9f988"
+            ]
+        ]
+    },
+    {
+        "id": "2b6797a.fd49868",
+        "type": "function",
+        "name": "Publish",
+        "func": "sbench = msg.payload;\ntransits = sbench.transits;\nsittings = sbench.sittings\nvar newmsg = { payload: msg.payload.length };\nnewmsg.url =  \"http://api.thingspeak.com/update?key=V1NR6N6RQFWFUW75&field1=\" + sittings;\nreturn newmsg;",
+        "outputs": 1,
+        "valid": true,
+        "x": 381,
+        "y": 651,
+        "z": "f1357f2e.0eca8",
+        "wires": [
+            [
+                "1591e741.ea6e19",
+                "938463ba.6c7ba"
+            ]
+        ]
+    },
+    {
+        "id": "1591e741.ea6e19",
+        "type": "http request",
+        "name": "",
+        "method": "GET",
+        "ret": "txt",
+        "url": "",
+        "x": 606,
+        "y": 651,
+        "z": "f1357f2e.0eca8",
+        "wires": [
+            [
+                "eb0dae2f.14f25"
+            ]
+        ]
+    },
+    {
+        "id": "eb0dae2f.14f25",
+        "type": "debug",
+        "name": "",
+        "active": false,
+        "console": "false",
+        "complete": "false",
+        "x": 794,
+        "y": 651,
+        "z": "f1357f2e.0eca8",
+        "wires": []
+    },
+    {
+        "id": "938463ba.6c7ba",
+        "type": "debug",
+        "name": "",
+        "active": false,
+        "console": "false",
+        "complete": "url",
+        "x": 594,
+        "y": 593,
+        "z": "f1357f2e.0eca8",
+        "wires": []
+    }
+]

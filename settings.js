@@ -42,7 +42,7 @@ adminAuth: {
 	
 	
     // the tcp port that the Node-RED web server is listening on
-    uiPort: process.env.VCAP_APP_PORT || 1880,
+    uiPort: process.env.VCAP_APP_PORT || 1880, //added BLUEMIX port
 
     // By default, the Node-RED UI accepts connections on all IPv4 interfaces.
     // The following property can be used to listen on a specific interface. For
@@ -66,16 +66,17 @@ adminAuth: {
     debugMaxLength: 1000,
 
     // The file containing the flows. If not set, it defaults to flows_<hostname>.json
-    //flowFile: 'flows.json',
+    flowFile: 'tired_flow.json',
 
     // To enabled pretty-printing of the flow within the flow file, set the following
     //  property to true:
-    //flowFilePretty: true,
+    flowFilePretty: true,
     
     // By default, all user data is stored in the Node-RED install directory. To
     // use a different location, the following property can be used
     //userDir: '/home/nol/.node-red/',
-
+    userDir : './.node-red/',
+    
     // Node-RED scans the `nodes` directory in the install directory to find nodes.
     // The following property can be used to specify an additional directory to scan.
     //nodesDir: '/home/nol/.node-red/nodes',
