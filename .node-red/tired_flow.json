@@ -158,7 +158,7 @@
         "id": "57f2365f.a80dc8",
         "type": "debug",
         "name": "",
-        "active": false,
+        "active": true,
         "console": "false",
         "complete": "false",
         "x": 752,
