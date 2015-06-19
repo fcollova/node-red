@@ -5,6 +5,11 @@
         "label": "Sheet 1"
     },
     {
+        "id": "7db1a850.824e58",
+        "type": "twitter-credentials",
+        "screen_name": "@infosbench"
+    },
+    {
         "id": "49145476.b6ebac",
         "type": "http request",
         "name": "http GET from Smartbench",
@@ -135,7 +140,7 @@
     {
         "id": "c8623d2a.379dc",
         "type": "twitter out",
-        "twitter": "",
+        "twitter": "7db1a850.824e58",
         "name": "Tweet @infobench",
         "x": 707,
         "y": 345,
@@ -170,7 +175,7 @@
         "id": "3a974971.c568b6",
         "type": "debug",
         "name": "",
-        "active": false,
+        "active": true,
         "console": "false",
         "complete": "false",
         "x": 687,
@@ -253,5 +258,24 @@
         "y": 593,
         "z": "f1357f2e.0eca8",
         "wires": []
+    },
+    {
+        "id": "44009127.bbff7",
+        "type": "inject",
+        "name": "",
+        "topic": "",
+        "payload": "Prova-Prova",
+        "payloadType": "string",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 455,
+        "y": 346,
+        "z": "f1357f2e.0eca8",
+        "wires": [
+            [
+                "c8623d2a.379dc"
+            ]
+        ]
     }
 ]
